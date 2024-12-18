@@ -2,74 +2,81 @@ package com.example.app.url;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "urls")
 public class Url {
-    private int id;
-    private String short_url;
-    private String full_url;
-    private int user_id;
-    private LocalDate created_at;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-generate ID (e.g., auto-increment)
+    private Integer id;
+    private String shortUrl;
+    private String fullUrl;
+    private Integer userId;
+    private LocalDate createdAt;
 
     public Url() {
-
+        
     }
 
-    public Url(int id, String short_url, String full_url, int user_id, LocalDate created_at) {
-        this.id = id;
-        this.short_url = short_url;
-        this.full_url = full_url;
-        this.user_id = user_id;
-        this.created_at = created_at;
+    public Url(String shortUrl, String fullUrl, Integer userId) {
+        this.shortUrl = shortUrl;
+        this.fullUrl = fullUrl;
+        this.userId = userId;
     }
 
-    public Url(String short_url, String full_url, int user_id, LocalDate created_at) {
-        this.short_url = short_url;
-        this.full_url = full_url;
-        this.user_id = user_id;
-        this.created_at = created_at;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     public String getShortUrl() {
-        return this.short_url;
+        return this.shortUrl;
     }
 
-    public void setShortUrl(String short_url) {
-        this.short_url = short_url;
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
     public String getFullUrl() {
-        return this.full_url;
+        return this.fullUrl;
     }
 
-    public void setFullUrl(String full_url) {
-        this.full_url = full_url;
+    public void setFullUrl(String fullUrl) {
+        this.fullUrl = fullUrl;
     }
 
     public int getUserId() {
-        return this.user_id;
+        return this.userId;
     }
 
-    public void setUserId(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public LocalDate getCreatedAt() {
-        return this.created_at;
+        return this.createdAt;
     }
 
-    public void setCreatedAt(LocalDate created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
-        return this.id + " " + this.short_url + " " + this.full_url + " " + this.user_id + " " + this.created_at;
+        return 
+            "id: " + this.id + ", " + 
+            "short_url: " + this.shortUrl + ", " + 
+            "full_url: " + this.fullUrl + ", " + 
+            "user_id: " + this.userId + ", " + 
+            "created_at: " + this.createdAt;
     }
 }
