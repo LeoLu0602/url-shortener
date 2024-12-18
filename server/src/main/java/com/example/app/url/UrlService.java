@@ -2,10 +2,9 @@ package com.example.app.url;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,35 +17,35 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
 
-    public void addUrl(Url url) {
-        Optional<Url> urlOptional = urlRepository.findUrlByShortUrl(url.getShortUrl());
+    public void addUrl(Url req) {
+        List<Url> sameProvidedShortUrlList = urlRepository.findByShortUrl(req.getShortUrl());
 
-        if (urlOptional.isPresent()) {
+        if (!sameProvidedShortUrlList.isEmpty()) {
             // If a custom alias is already in use, reject the alias and return a bad request (400).
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Short URL already exists.");
         }
 
-        Url newUrl = new Url(url.getShortUrl(), url.getFullUrl());
+        Url toBeSaved = new Url(req.getShortUrl(), req.getFullUrl());
 
-        if (url.getShortUrl().isEmpty()) {
+        if (req.getShortUrl().isEmpty()) {
             // If no custom alias is given, generate a random identifier.
-            String shortUrl = this.generateShortUrl(url.getFullUrl());
+            String shortUrl = this.generateShortUrl(req.getFullUrl());
 
             if (shortUrl.isEmpty()) {
                 // toSHA256 doesn't work as expected.
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("The server encountered an internal error.");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server encountered an internal error.");
             }
 
-            newUrl.setShortUrl(shortUrl);
+            toBeSaved.setShortUrl(shortUrl);
         }
 
-        Optional<Url> newUrlOptional = urlRepository.findUrlByShortUrl(newUrl.getShortUrl());
+        List<Url> sameGeneratedShortUrlList = urlRepository.findByShortUrl(toBeSaved.getShortUrl());
 
-        if (!newUrlOptional.isPresent()) {
+        if (sameGeneratedShortUrlList.isEmpty()) {
             // shortUrl is unique.
             // Only save if the generated shortUrl is not already in use.
             // SHA-256 is deterministic, meaning that given the same input data, the output will always be identical.
-            urlRepository.save(newUrl);
+            urlRepository.save(toBeSaved);
         }
     }
 
@@ -78,7 +77,6 @@ public class UrlService {
     }
 
     public void redirect(String fullUrl) {
-        Optional<Url> urlOptional = urlRepository.findUrlByFullUrl(fullUrl);
 
     }
 }
