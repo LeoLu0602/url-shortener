@@ -11,9 +11,23 @@ export default function Form() {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>): void {}
 
-    function handleLongUrlChange(e: ChangeEvent<HTMLInputElement>): void {}
+    function handleLongUrlChange(e: ChangeEvent<HTMLInputElement>): void {
+        setFormData((prev) => {
+            return {
+                ...prev,
+                longUrl: e.target.value,
+            };
+        });
+    }
 
-    function handleAliasChange(e: ChangeEvent<HTMLInputElement>): void {}
+    function handleAliasChange(e: ChangeEvent<HTMLInputElement>): void {
+        setFormData((prev) => {
+            return {
+                ...prev,
+                alias: e.target.value,
+            };
+        });
+    }
 
     return (
         <form
@@ -21,7 +35,9 @@ export default function Form() {
             onSubmit={handleSubmit}
         >
             <div>
-                <label className='mb-4' htmlFor="long-url">Shorten a long URL</label>
+                <label className="mb-4" htmlFor="long-url">
+                    Shorten a long URL
+                </label>
                 <br />
                 <input
                     className="border-gray-200 border-2 rounded-lg focus:outline-none p-2 w-full my-4"
@@ -29,7 +45,7 @@ export default function Form() {
                     name="long-url"
                     value={formData.longUrl}
                     onChange={handleLongUrlChange}
-                    placeholder='Enter long link here'
+                    placeholder="Enter long link here"
                     required
                 />
             </div>
@@ -46,7 +62,12 @@ export default function Form() {
                     required
                 />
             </div>
-            <button className='w-full bg-[#1f8244] text-white rounded-lg p-4 mt-4 hover:bg-[#175f31]' type="submit">Shorten URL</button>
+            <button
+                className="w-full bg-[#1f8244] text-white rounded-lg p-4 mt-4 hover:bg-[#175f31]"
+                type="submit"
+            >
+                Shorten URL
+            </button>
         </form>
     );
 }
