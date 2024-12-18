@@ -23,7 +23,7 @@ public class Url {
     private Integer userId;
     private LocalDate createdAt;
 
-    public Url() {
+    protected Url() {
         
     }
 
