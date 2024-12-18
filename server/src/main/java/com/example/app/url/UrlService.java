@@ -2,7 +2,6 @@ package com.example.app.url;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -17,10 +16,6 @@ public class UrlService {
 
     public UrlService(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
-    }
-
-    public List<Url> getUrls() {
-        return urlRepository.findAll();
     }
 
     public void addUrl(Url url) {
@@ -80,5 +75,10 @@ public class UrlService {
         } catch (NoSuchAlgorithmException e) {
             return "";
         }
+    }
+
+    public void redirect(String fullUrl) {
+        Optional<Url> urlOptional = urlRepository.findUrlByFullUrl(fullUrl);
+
     }
 }
