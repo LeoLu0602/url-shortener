@@ -2,6 +2,8 @@ package com.example.app.url;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
+@DynamicInsert
 @Table(name = "urls")
 public class Url {
 
@@ -24,10 +27,9 @@ public class Url {
         
     }
 
-    public Url(String shortUrl, String fullUrl, Integer userId) {
+    public Url(String shortUrl, String fullUrl) {
         this.shortUrl = shortUrl;
         this.fullUrl = fullUrl;
-        this.userId = userId;
     }
 
     public Integer getId() {
