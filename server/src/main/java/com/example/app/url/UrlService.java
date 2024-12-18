@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 public class UrlService {
 
     private final UrlRepository urlRepository;
+    private static final String BASE_URL = "http://localhost:8080/";
 
     public UrlService(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
@@ -50,14 +51,13 @@ public class UrlService {
     }
 
     public String generateShortUrl(String fullUrl) {
-        String baseUrl = "http://localhost:8080/";
         String hash = this.toSHA265(fullUrl);
         
         if (hash.isEmpty()) {
             return "";
         }
 
-        return baseUrl + hash.substring(0, 10);
+        return BASE_URL + hash.substring(0, 10);
     }
 
     public String toSHA265(String input) {
@@ -76,7 +76,13 @@ public class UrlService {
         }
     }
 
-    public void redirect(String fullUrl) {
+    public String handleRedirect(String alias) {
+        List<Url> sameShortUrlList = urlRepository.findByShortUrl(BASE_URL + alias);
 
+        if (sameShortUrlList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Short URL does not exist.");
+        } else {
+            return sameShortUrlList.get(0).getFullUrl();
+        }
     }
 }
