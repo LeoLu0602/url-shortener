@@ -18,7 +18,7 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
 
-    public void addUrl(Url req) {
+    public String addUrl(Url req) {
         List<Url> sameProvidedShortUrlList = urlRepository.findByShortUrl(req.getShortUrl());
 
         if (!sameProvidedShortUrlList.isEmpty()) {
@@ -48,6 +48,8 @@ public class UrlService {
             // SHA-256 is deterministic, meaning that given the same input data, the output will always be identical.
             urlRepository.save(toBeSaved);
         }
+
+        return toBeSaved.getShortUrl();
     }
 
     public String generateShortUrl(String fullUrl) {

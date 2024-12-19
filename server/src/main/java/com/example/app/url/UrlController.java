@@ -1,5 +1,7 @@
 package com.example.app.url;
 
+import java.util.HashMap;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +19,13 @@ public class UrlController {
     }
 
     @PostMapping("/api/v1/url")
-    public void addUrl(@RequestBody Url req) {
-        urlService.addUrl(req);
+    public HashMap<String, String> addUrl(@RequestBody Url req) {
+        HashMap<String, String> res = new HashMap<>();
+        String shortUrl = urlService.addUrl(req);
+
+        res.put("shortUrl", shortUrl);
+
+        return res;
     }
 
     @GetMapping("/{alias}")
