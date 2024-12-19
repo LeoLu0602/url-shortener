@@ -9,10 +9,35 @@ export default function Form() {
         longUrl: '',
         alias: '',
     });
+    const [shortUrl, setShortUrl] = useState<string>('');
 
-    const BASE_URL = 'http://loaclhost:8080/';
+    const BASE_URL = 'http://localhost:8080/';
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>): void {}
+    async function handleSubmit(): Promise<void> {
+        try {
+            const response = await fetch(BASE_URL + 'api/v1/url', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    alias: formData.alias,
+                    fullUrl: formData.longUrl,
+                }),
+            });
+
+            const json = await response.json();
+
+            if (response.status !== 200) {
+                alert(json.message);
+            } else {
+                setShortUrl(BASE_URL + json.alias);
+                setShowResult(true);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     function handleLongUrlChange(e: ChangeEvent<HTMLInputElement>): void {
         setFormData((prevState) => {
@@ -46,21 +71,19 @@ export default function Form() {
                             type="text"
                             name="long-url"
                             value={formData.longUrl}
-                            required
                             disabled
                         />
                     </div>
                     <div>
-                        <label className="mb-4" htmlFor="long-url">
+                        <label className="mb-4" htmlFor="short-url">
                             Your Short URL
                         </label>
                         <br />
                         <input
                             className="border-gray-200 border-2 rounded-lg focus:outline-none p-2 w-full my-4 text-[#218345]"
                             type="text"
-                            name="long-url"
-                            value={BASE_URL + formData.alias}
-                            required
+                            name="short-url"
+                            value={shortUrl}
                             disabled
                         />
                     </div>
@@ -87,10 +110,7 @@ export default function Form() {
                     </div>
                 </section>
             ) : (
-                <form
-                    className="bg-white p-8 rounded-lg text-xl w-[448.5px]"
-                    onSubmit={handleSubmit}
-                >
+                <section className="bg-white p-8 rounded-lg text-xl w-[448.5px]">
                     <div>
                         <label className="mb-4" htmlFor="long-url">
                             Shorten a long URL
@@ -116,19 +136,16 @@ export default function Form() {
                             value={formData.alias}
                             onChange={handleAliasChange}
                             placeholder="Enter alias"
-                            required
                         />
                     </div>
                     <button
                         className="w-full bg-[#1f8244] text-white rounded-lg p-4 mt-8 hover:bg-[#175f31] transition-all font-bold"
                         type="submit"
-                        onClick={() => {
-                            setShowResult(true);
-                        }}
+                        onClick={handleSubmit}
                     >
                         Shorten URL
                     </button>
-                </form>
+                </section>
             )}
         </>
     );
