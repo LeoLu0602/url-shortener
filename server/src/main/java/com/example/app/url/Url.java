@@ -22,6 +22,7 @@ public class Url {
     private String fullUrl;
     private Long userId;
     private LocalDate createdAt;
+    private Long count;
 
     protected Url() {
         
@@ -72,6 +73,14 @@ public class Url {
         this.createdAt = createdAt;
     }
 
+    public Long getCount() {
+        return this.count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
         return 
@@ -79,6 +88,7 @@ public class Url {
             "alias: " + this.alias + ", " + 
             "full_url: " + this.fullUrl + ", " + 
             "user_id: " + this.userId + ", " + 
-            "created_at: " + this.createdAt;
+            "created_at: " + this.createdAt + ", " +
+            "count: " + this.count;
     }
 }
