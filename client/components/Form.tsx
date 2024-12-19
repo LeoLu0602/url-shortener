@@ -62,12 +62,20 @@ export default function Form() {
         });
     }
 
+    function handleVisit() {
+        window.open(shortUrl, '_blank');
+    }
+
     function handleCopy() {
         navigator.clipboard.writeText(shortUrl);
         setCopyBtnTxt('Copied!');
         setTimeout(() => {
             setCopyBtnTxt('Copy');
         }, 1000);
+    }
+
+    function handleShortenAnother() {
+        setShowResult(false);
     }
 
     return (
@@ -103,9 +111,7 @@ export default function Form() {
                     <div className="mb-4">
                         <button
                             className="border-2 py-2 px-4 mr-2 border-[#0980a1] rounded-lg text-[#0980a1] hover:bg-[#0980a1] hover:text-white transition-all"
-                            onClick={() => {
-                                window.open(shortUrl, '_blank');
-                            }}
+                            onClick={handleVisit}
                         >
                             Visit
                         </button>
@@ -122,9 +128,7 @@ export default function Form() {
                         </button>
                         <button
                             className="bg-[#1f8244] py-4 w-1/2 font-bold rounded-lg text-white hover:bg-[#175f31] transition-all"
-                            onClick={() => {
-                                setShowResult(false);
-                            }}
+                            onClick={handleShortenAnother}
                         >
                             Shorten another
                         </button>
