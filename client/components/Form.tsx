@@ -20,7 +20,7 @@ export default function Form() {
         }
 
         try {
-            const response = await fetch(BASE_URL + 'api/v1/url', {
+            const response = await fetch(BASE_URL + 'api/v1/url/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -78,7 +78,7 @@ public class Url {
     }
 
     public void setCount(Long count) {
-        this.count = count;
+        this.count = count; 
     }
 
     @Override
