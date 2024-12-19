@@ -18,17 +18,17 @@ public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-generate ID (e.g., auto-increment)
     private Long id;
-    private String shortUrl;
+    private String alias;
     private String fullUrl;
-    private Integer userId;
+    private Long userId;
     private LocalDate createdAt;
 
     protected Url() {
         
     }
 
-    public Url(String shortUrl, String fullUrl) {
-        this.shortUrl = shortUrl;
+    public Url(String alias, String fullUrl) {
+        this.alias = alias;
         this.fullUrl = fullUrl;
     }
 
@@ -40,12 +40,12 @@ public class Url {
         this.id = id;
     }
 
-    public String getShortUrl() {
-        return this.shortUrl;
+    public String getAlias() {
+        return this.alias;
     }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getFullUrl() {
@@ -56,11 +56,11 @@ public class Url {
         this.fullUrl = fullUrl;
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return this.userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -76,7 +76,7 @@ public class Url {
     public String toString() {
         return 
             "id: " + this.id + ", " + 
-            "short_url: " + this.shortUrl + ", " + 
+            "alias: " + this.alias + ", " + 
             "full_url: " + this.fullUrl + ", " + 
             "user_id: " + this.userId + ", " + 
             "created_at: " + this.createdAt;

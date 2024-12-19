@@ -12,57 +12,57 @@ import org.springframework.web.server.ResponseStatusException;
 public class UrlService {
 
     private final UrlRepository urlRepository;
-    private static final String BASE_URL = "http://localhost:8080/";
 
     public UrlService(UrlRepository urlRepository) {
         this.urlRepository = urlRepository;
     }
 
     public String addUrl(Url req) {
-        List<Url> sameProvidedShortUrlList = urlRepository.findByShortUrl(req.getShortUrl());
+        String customAlias = req.getAlias();
+        String fullUrl = req.getFullUrl();
 
-        if (!sameProvidedShortUrlList.isEmpty()) {
-            // If a custom alias is already in use, reject the alias and return a bad request (400).
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Short URL already exists.");
-        }
-
-        Url toBeSaved = new Url(req.getShortUrl(), req.getFullUrl());
-
-        if (req.getShortUrl().isEmpty()) {
-            // If no custom alias is given, generate a random identifier.
-            String shortUrl = this.generateShortUrl(req.getFullUrl());
-
-            if (shortUrl.isEmpty()) {
-                // toSHA256 doesn't work as expected.
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server encountered an internal error.");
+        if (!customAlias.isEmpty()) {
+            if (!urlRepository.findByAlias(customAlias).isEmpty()) {
+                // If a custom alias is already in use, reject the alias and return a bad request (400).
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias already exists.");
             }
+            
+            // The custom alias is not in use, save it.
+            urlRepository.save(new Url(customAlias, fullUrl));
 
-            toBeSaved.setShortUrl(shortUrl);
+            return customAlias;
+        } 
+
+        // If no custom alias is given, generate one.
+        String alias = this.generateAlias(fullUrl);
+
+        if (alias.isEmpty()) {
+            // toSHA256 doesn't work as expected.
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server encountered an internal error.");
         }
 
-        List<Url> sameGeneratedShortUrlList = urlRepository.findByShortUrl(toBeSaved.getShortUrl());
-
-        if (sameGeneratedShortUrlList.isEmpty()) {
-            // shortUrl is unique.
-            // Only save if the generated shortUrl is not already in use.
+        if (urlRepository.findByAlias(alias).isEmpty()) {
+            // alias is unique.
+            // Only save alias if it is not already in use.
             // SHA-256 is deterministic, meaning that given the same input data, the output will always be identical.
-            urlRepository.save(toBeSaved);
+            urlRepository.save(new Url(alias, fullUrl));
         }
-
-        return toBeSaved.getShortUrl();
+        
+        return alias;
     }
 
-    public String generateShortUrl(String fullUrl) {
-        String hash = this.toSHA265(fullUrl);
+    public String generateAlias(String fullUrl) {
+        String hash = this.toSHA256(fullUrl);
         
         if (hash.isEmpty()) {
+            // Something went wrong.
             return "";
         }
 
-        return BASE_URL + hash.substring(0, 10);
+        return hash.substring(0, 10);
     }
 
-    public String toSHA265(String input) {
+    public String toSHA256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = digest.digest(input.getBytes());
@@ -79,12 +79,12 @@ public class UrlService {
     }
 
     public String getFullUrl(String alias) {
-        List<Url> sameShortUrlList = urlRepository.findByShortUrl(BASE_URL + alias);
+        List<Url> rowsWithSameAlias = urlRepository.findByAlias(alias);
 
-        if (sameShortUrlList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Short URL does not exist.");
+        if (rowsWithSameAlias.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias does not exist.");
         } else {
-            return sameShortUrlList.get(0).getFullUrl();
+            return rowsWithSameAlias.get(0).getFullUrl();
         }
     }
 }
