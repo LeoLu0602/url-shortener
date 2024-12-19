@@ -32,6 +32,8 @@ public class UrlController {
 
     @GetMapping("/{alias}")
     public RedirectView redirect(@PathVariable("alias") String alias) {
+        urlService.incrementCount(alias);
+
         return new RedirectView(urlService.getFullUrl(alias));
     }
 }

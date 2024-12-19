@@ -87,4 +87,8 @@ public class UrlService {
             return rowsWithSameAlias.get(0).getFullUrl();
         }
     }
+
+    public void incrementCount(String alias) {
+        urlRepository.incrementCount(alias);
+    }
 }
