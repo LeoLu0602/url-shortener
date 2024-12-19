@@ -2,6 +2,7 @@ package com.example.app.url;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -90,5 +91,9 @@ public class UrlService {
 
     public void incrementCount(String alias) {
         urlRepository.incrementCount(alias);
+    }
+
+    public void setLastTimeAccessed(String alias, LocalDateTime time) {
+        urlRepository.setLastTimeAccessed(alias, time);
     }
 }

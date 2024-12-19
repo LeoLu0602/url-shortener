@@ -1,5 +1,6 @@
 package com.example.app.url;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,6 +34,7 @@ public class UrlController {
     @GetMapping("/{alias}")
     public RedirectView redirect(@PathVariable("alias") String alias) {
         urlService.incrementCount(alias);
+        urlService.setLastTimeAccessed(alias, LocalDateTime.now());
 
         return new RedirectView(urlService.getFullUrl(alias));
     }
