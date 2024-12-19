@@ -1,9 +1,9 @@
 'use client';
 
 import { FormType } from '@/types';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-export default function Form() {
+export default function Form({ openHistory }: { openHistory: () => void }) {
     const [showResult, setShowResult] = useState<boolean>(false);
     const [formData, setFormData] = useState<FormType>({
         longUrl: '',
@@ -81,7 +81,7 @@ export default function Form() {
     return (
         <>
             {showResult ? (
-                <section className="bg-white p-8 rounded-lg text-xl w-[448.5px]">
+                <section className="bg-white p-4 rounded-lg text-xl w-[448.5px]">
                     <div>
                         <label className="mb-4" htmlFor="long-url">
                             Your Long URL
@@ -123,7 +123,10 @@ export default function Form() {
                         </button>
                     </div>
                     <div>
-                        <button className="border-2 py-4 w-1/3 mr-2 border-[#1f8244] rounded-lg text-[#1f8244] hover:bg-[#175f31] hover:text-white transition-all font-bold">
+                        <button
+                            className="border-2 py-4 w-1/3 mr-2 border-[#1f8244] rounded-lg text-[#1f8244] hover:bg-[#175f31] hover:text-white transition-all font-bold"
+                            onClick={openHistory}
+                        >
                             My URLs
                         </button>
                         <button
@@ -135,7 +138,7 @@ export default function Form() {
                     </div>
                 </section>
             ) : (
-                <section className="bg-white p-8 rounded-lg text-xl w-[448.5px]">
+                <section className="bg-white p-4 rounded-lg text-xl w-[448.5px]">
                     <div>
                         <label className="mb-4" htmlFor="long-url">
                             Shorten a long URL
