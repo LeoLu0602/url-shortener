@@ -23,6 +23,7 @@ public class Url {
     private Long userId;
     private LocalDate createdAt;
     private Long count;
+    private LocalDate lastTimeAccessed;
 
     protected Url() {
         
@@ -81,6 +82,14 @@ public class Url {
         this.count = count; 
     }
 
+    public LocalDate lastTimeAccessed() {
+        return this.lastTimeAccessed;
+    }
+
+    public void setLastTimeAccessed(LocalDate lastTimeAccessed) {
+        this.lastTimeAccessed = lastTimeAccessed;
+    }
+
     @Override
     public String toString() {
         return 
@@ -89,6 +98,7 @@ public class Url {
             "full_url: " + this.fullUrl + ", " + 
             "user_id: " + this.userId + ", " + 
             "created_at: " + this.createdAt + ", " +
-            "count: " + this.count;
+            "count: " + this.count + ", " +
+            "last_time_accessed: " + this.lastTimeAccessed;
     }
 }
