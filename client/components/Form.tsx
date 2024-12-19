@@ -14,6 +14,10 @@ export default function Form() {
     const BASE_URL = 'http://localhost:8080/';
 
     async function handleSubmit(): Promise<void> {
+        if (formData.longUrl === '') {
+            return;
+        }
+
         try {
             const response = await fetch(BASE_URL + 'api/v1/url', {
                 method: 'POST',
