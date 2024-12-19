@@ -10,6 +10,7 @@ export default function Form() {
         alias: '',
     });
     const [shortUrl, setShortUrl] = useState<string>('');
+    const [copyBtnTxt, setCopyBtnTxt] = useState<string>('Copy');
 
     const BASE_URL = 'http://localhost:8080/';
 
@@ -61,6 +62,14 @@ export default function Form() {
         });
     }
 
+    function handleCopy() {
+        navigator.clipboard.writeText(shortUrl);
+        setCopyBtnTxt('Copied!');
+        setTimeout(() => {
+            setCopyBtnTxt('Copy');
+        }, 1000);
+    }
+
     return (
         <>
             {showResult ? (
@@ -100,8 +109,11 @@ export default function Form() {
                         >
                             Visit
                         </button>
-                        <button className="bg-[#1f8244] py-2 px-4 rounded-lg text-white hover:bg-[#175f31] transition-all">
-                            Copy
+                        <button
+                            className="bg-[#1f8244] py-2 px-4 rounded-lg text-white hover:bg-[#175f31] transition-all"
+                            onClick={handleCopy}
+                        >
+                            {copyBtnTxt}
                         </button>
                     </div>
                     <div>
