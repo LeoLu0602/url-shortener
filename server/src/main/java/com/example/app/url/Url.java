@@ -1,6 +1,6 @@
 package com.example.app.url;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -21,9 +21,9 @@ public class Url {
     private String alias;
     private String fullUrl;
     private Long userId;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
     private Long count;
-    private LocalDate lastTimeAccessed;
+    private LocalDateTime lastTimeAccessed;
 
     protected Url() {
         
@@ -66,11 +66,11 @@ public class Url {
         this.userId = userId;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
 
-    public void setCreatedAt(LocalDate createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -82,11 +82,15 @@ public class Url {
         this.count = count; 
     }
 
-    public LocalDate lastTimeAccessed() {
+    public LocalDateTime lastTimeAccessed() {
+        if (this.lastTimeAccessed == null) {
+            return LocalDateTime.now();
+        }
+
         return this.lastTimeAccessed;
     }
 
-    public void setLastTimeAccessed(LocalDate lastTimeAccessed) {
+    public void setLastTimeAccessed(LocalDateTime lastTimeAccessed) {
         this.lastTimeAccessed = lastTimeAccessed;
     }
 
