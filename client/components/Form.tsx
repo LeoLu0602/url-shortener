@@ -88,7 +88,12 @@ export default function Form() {
                         />
                     </div>
                     <div className="mb-4">
-                        <button className="border-2 py-2 px-4 mr-2 border-[#0980a1] rounded-lg text-[#0980a1] hover:bg-[#0980a1] hover:text-white transition-all">
+                        <button
+                            className="border-2 py-2 px-4 mr-2 border-[#0980a1] rounded-lg text-[#0980a1] hover:bg-[#0980a1] hover:text-white transition-all"
+                            onClick={() => {
+                                window.open(shortUrl, '_blank');
+                            }}
+                        >
                             Visit
                         </button>
                         <button className="bg-[#1f8244] py-2 px-4 rounded-lg text-white hover:bg-[#175f31] transition-all">
