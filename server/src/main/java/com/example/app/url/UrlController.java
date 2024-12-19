@@ -23,6 +23,6 @@ public class UrlController {
 
     @GetMapping("/{alias}")
     public RedirectView redirect(@PathVariable("alias") String alias) {
-        return new RedirectView(urlService.handleRedirect(alias));
+        return new RedirectView(urlService.getFullUrl(alias));
     }
 }

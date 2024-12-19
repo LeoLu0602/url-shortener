@@ -76,7 +76,7 @@ public class UrlService {
         }
     }
 
-    public String handleRedirect(String alias) {
+    public String getFullUrl(String alias) {
         List<Url> sameShortUrlList = urlRepository.findByShortUrl(BASE_URL + alias);
 
         if (sameShortUrlList.isEmpty()) {
