@@ -37,11 +37,41 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
             if (response.status !== 200) {
                 alert(json.message);
             } else {
+                updateLocalHistory(BASE_URL + json.alias, formData.longUrl);
                 setShortUrl(BASE_URL + json.alias);
                 setShowResult(true);
             }
         } catch (error) {
             console.error(error);
+        }
+    }
+
+    function updateLocalHistory(shortUrl: string, fullUrl: string) {
+        const historyString: string | null = localStorage.getItem('history');
+
+        if (historyString) {
+            const history = JSON.parse(historyString);
+
+            history.push({
+                shortUrl,
+                fullUrl,
+            });
+
+            if (history.length > 5) {
+                history.shift();
+            }
+
+            localStorage.setItem('history', JSON.stringify(history));
+        } else {
+            localStorage.setItem(
+                'history',
+                JSON.stringify([
+                    {
+                        shortUrl,
+                        fullUrl,
+                    },
+                ])
+            );
         }
     }
 
