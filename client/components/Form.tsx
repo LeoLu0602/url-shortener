@@ -4,7 +4,13 @@ import { ChangeEvent, useState } from 'react';
 import clsx from 'clsx';
 import { FormType } from '@/types';
 
-export default function Form({ openHistory }: { openHistory: () => void }) {
+export default function Form({
+    openHistory,
+    updateHistory,
+}: {
+    openHistory: () => void;
+    updateHistory: (alias: string) => void;
+}) {
     const [showResult, setShowResult] = useState<boolean>(false);
     const [formData, setFormData] = useState<FormType>({
         longUrl: '',
@@ -31,41 +37,17 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
                     fullUrl: formData.longUrl,
                 }),
             });
-
             const json = await response.json();
 
             if (response.status !== 200) {
                 alert(json.message);
             } else {
-                updateLocalHistory(BASE_URL + json.alias);
+                updateHistory(json.alias);
                 setShortUrl(BASE_URL + json.alias);
                 setShowResult(true);
             }
         } catch (error) {
             console.error(error);
-        }
-    }
-
-    function updateLocalHistory(shortUrl: string) {
-        const historyString: string | null = localStorage.getItem('history');
-
-        if (historyString) {
-            const history: string[] = JSON.parse(historyString);
-
-            if (!new Set(history).has(shortUrl)) {
-                // Avoid duplicate shortUrl.
-                history.push(shortUrl);
-            }
-
-            if (history.length > 5) {
-                // Only show RECENT history.
-                history.shift();
-            }
-
-            history.reverse();
-            localStorage.setItem('history', JSON.stringify(history));
-        } else {
-            localStorage.setItem('history', JSON.stringify([shortUrl]));
         }
     }
 
