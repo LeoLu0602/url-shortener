@@ -19,8 +19,8 @@ public class UrlService {
     }
 
     public String addUrl(Url req) {
-        String customAlias = req.getAlias();
-        String fullUrl = req.getFullUrl();
+        String customAlias = req.getAlias().strip();
+        String fullUrl = req.getFullUrl().strip();
 
         if (!customAlias.isEmpty()) {
             if (!urlRepository.findByAlias(customAlias).isEmpty()) {
