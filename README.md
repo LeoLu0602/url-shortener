@@ -8,6 +8,8 @@
 
 ## About
 
+URL Shortener
+
 ## Demo
 
 ![demo](./client/demo/demo1.png)
