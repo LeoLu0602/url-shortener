@@ -1,7 +1,8 @@
 'use client';
 
-import { FormType } from '@/types';
 import { ChangeEvent, useState } from 'react';
+import clsx from 'clsx';
+import { FormType } from '@/types';
 
 export default function Form({ openHistory }: { openHistory: () => void }) {
     const [showResult, setShowResult] = useState<boolean>(false);
@@ -10,7 +11,7 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
         alias: '',
     });
     const [shortUrl, setShortUrl] = useState<string>('');
-    const [copyBtnTxt, setCopyBtnTxt] = useState<string>('Copy');
+    const [copyBtnTxt, setCopyBtnTxt] = useState<'Copy' | 'Copied!'>('Copy');
 
     const BASE_URL = 'http://localhost:8080/';
 
@@ -81,14 +82,14 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
     return (
         <>
             {showResult ? (
-                <section className="bg-white p-4 rounded-lg text-xl w-[448.5px]">
+                <section className="bg-white p-4 rounded-lg w-[448.5px] text-xl">
                     <div>
                         <label className="mb-4" htmlFor="long-url">
                             Your Long URL
                         </label>
                         <br />
                         <input
-                            className="border-gray-200 border-2 rounded-lg focus:outline-none p-2 w-full my-4 text-[#218345]"
+                            className="border-gray-200 border-2 rounded-lg focus:outline-none py-2 px-4 w-full my-4 text-[#218345]"
                             type="text"
                             name="long-url"
                             value={formData.longUrl}
@@ -101,7 +102,7 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
                         </label>
                         <br />
                         <input
-                            className="border-gray-200 border-2 rounded-lg focus:outline-none p-2 w-full my-4 text-[#218345]"
+                            className="border-gray-200 border-2 rounded-lg focus:outline-none py-2 px-4 w-full my-4 text-[#218345]"
                             type="text"
                             name="short-url"
                             value={shortUrl}
@@ -110,27 +111,35 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
                     </div>
                     <div className="mb-4">
                         <button
-                            className="border-2 py-2 px-4 mr-2 border-[#0980a1] rounded-lg text-[#0980a1] hover:bg-[#0980a1] hover:text-white transition-all"
+                            className="border-2 py-2 w-24 mr-2 border-[#0980a1] rounded-lg text-[#0980a1] hover:bg-[#0980a1] hover:text-white transition-all"
                             onClick={handleVisit}
                         >
                             Visit
                         </button>
                         <button
-                            className="bg-[#1f8244] py-2 px-4 rounded-lg text-white hover:bg-[#175f31] transition-all"
+                            className={clsx(
+                                'py-2 w-24 rounded-lg transition-all',
+                                {
+                                    'border-[#1f8244] text-[#1f8244] border-2':
+                                        copyBtnTxt === 'Copied!',
+                                    'bg-[#1f8244] hover:bg-[#175f31] text-white':
+                                        copyBtnTxt === 'Copy',
+                                }
+                            )}
                             onClick={handleCopy}
                         >
                             {copyBtnTxt}
                         </button>
                     </div>
-                    <div>
+                    <div className="flex gap-4">
                         <button
-                            className="border-2 py-4 w-1/3 mr-2 border-[#1f8244] rounded-lg text-[#1f8244] hover:bg-[#175f31] hover:text-white transition-all font-bold"
+                            className="border-2 py-4 w-40 border-[#1f8244] rounded-lg text-[#1f8244] hover:bg-[#175f31] hover:text-white transition-all font-bold"
                             onClick={openHistory}
                         >
                             My URLs
                         </button>
                         <button
-                            className="bg-[#1f8244] py-4 w-1/2 font-bold rounded-lg text-white hover:bg-[#175f31] transition-all"
+                            className="bg-[#1f8244] grow py-4 w-auto font-bold rounded-lg text-white hover:bg-[#175f31] transition-all"
                             onClick={handleShortenAnother}
                         >
                             Shorten another
@@ -138,14 +147,14 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
                     </div>
                 </section>
             ) : (
-                <section className="bg-white p-4 rounded-lg text-xl w-[448.5px]">
+                <section className="bg-white p-4 rounded-lg w-[448.5px] text-xl">
                     <div>
                         <label className="mb-4" htmlFor="long-url">
                             Shorten a long URL
                         </label>
                         <br />
                         <input
-                            className="border-gray-200 border-2 rounded-lg focus:outline-none p-2 w-full my-4 text-[#218345]"
+                            className="border-gray-200 border-2 rounded-lg focus:outline-none py-2 px-4 w-full my-4 text-[#218345]"
                             type="text"
                             name="long-url"
                             value={formData.longUrl}
@@ -155,10 +164,12 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
                         />
                     </div>
                     <div>
-                        <label htmlFor="alias">Customize your link</label>
+                        <label className="" htmlFor="alias">
+                            Customize your link
+                        </label>
                         <br />
                         <input
-                            className="border-gray-200 border-2 rounded-lg focus:outline-none p-2 w-full my-4 text-[#218345]"
+                            className="border-gray-200 border-2 rounded-lg focus:outline-none py-2 px-4 w-full my-4 text-[#218345]"
                             type="text"
                             name="alias"
                             value={formData.alias}
