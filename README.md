@@ -5,6 +5,7 @@
 - [About](#about)
 - [Demo](#demo)
 - [Technologies](#technologies)
+- [Setup](#setup)
 
 ## About
 
@@ -18,3 +19,5 @@ URL Shortener
 
 - Front end: [Next.js](https://nextjs.org/)
 - Back end: [Spring Boot](https://spring.io/projects/spring-boot/)
+
+## Setup
