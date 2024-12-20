@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -29,6 +30,11 @@ public class UrlController {
         res.put("alias", alias);
 
         return res;
+    }
+
+    @GetMapping("/api/v1/url/analytics")
+    public Analytics getAnalytics(@RequestParam(value = "alias", defaultValue = "") String alias) {
+        return urlService.getAnalytics(alias);
     }
 
     @GetMapping("/{alias}")

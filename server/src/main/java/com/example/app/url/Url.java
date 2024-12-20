@@ -82,7 +82,7 @@ public class Url {
         this.count = count; 
     }
 
-    public LocalDateTime lastTimeAccessed() {
+    public LocalDateTime getLastTimeAccessed() {
         if (this.lastTimeAccessed == null) {
             return LocalDateTime.now();
         }
