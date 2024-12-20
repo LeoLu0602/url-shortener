@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useState } from 'react';
 import clsx from 'clsx';
+import axios from 'axios';
 import { FormType } from '@/types';
 import { BASE_URL } from '@/global';
 
@@ -22,31 +23,23 @@ export default function Form({
 
     async function handleSubmit(): Promise<void> {
         if (formData.longUrl === '') {
+            alert('The URL field is required.');
+
             return;
         }
 
         try {
-            const response = await fetch(BASE_URL + 'api/v1/url/add', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    alias: formData.alias,
-                    fullUrl: formData.longUrl,
-                }),
+            const res = await axios.post(BASE_URL + 'api/v1/url/add', {
+                alias: formData.alias,
+                fullUrl: formData.longUrl,
             });
-            const json = await response.json();
 
-            if (response.status !== 200) {
-                alert(json.message);
-            } else {
-                updateHistory(json.alias);
-                setShortUrl(BASE_URL + json.alias);
-                setShowResult(true);
-            }
+            updateHistory(res.data.alias);
+            setShortUrl(BASE_URL + res.data.alias);
+            setShowResult(true);
         } catch (error) {
             console.error(error);
+            alert(error.response.data.message);
         }
     }
 

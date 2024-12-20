@@ -28,39 +28,32 @@ export default function Home() {
 
         if (!new Set(history.map(({ alias }) => alias)).has(alias)) {
             try {
-                const response = await fetch(
-                    BASE_URL + 'api/v1/url/analytics?alias=' + alias,
-                    {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                );
-                const json = await response.json();
+                const res = await axios.get(BASE_URL + 'api/v1/url/analytics', {
+                    params: { alias },
+                });
 
-                if (response.status !== 200) {
-                    alert(json.message);
-                } else {
-                    newHistory.unshift(json);
-                    newHistory = newHistory.slice(0, 5);
-                }
+                newHistory.unshift(res.data);
+                newHistory = newHistory.slice(0, 5);
             } catch (error) {
                 console.error(error);
+                alert(error.response.data.message);
             }
 
             setHistory(newHistory);
-            localStorage.setItem('history', JSON.stringify(newHistory));
+            localStorage.setItem(
+                'recent-history',
+                JSON.stringify(newHistory.map(({ alias }) => alias))
+            );
         }
     }
 
     async function setUp() {
-        const historyString: string | null = localStorage.getItem('history');
+        const localStorageString: string | null =
+            localStorage.getItem('recent-history');
 
-        if (historyString !== null) {
-            const oldHistory: AnalyticsType[] = JSON.parse(historyString);
-            const aliases: string[] = oldHistory.map(({ alias }) => alias);
-            const updatedHistory = (
+        if (localStorageString !== null) {
+            const aliases: string[] = JSON.parse(localStorageString);
+            const initHistory: AnalyticsType[] = (
                 await Promise.allSettled(
                     aliases.map((alias) =>
                         axios.get(BASE_URL + 'api/v1/url/analytics', {
@@ -71,10 +64,14 @@ export default function Home() {
                     )
                 )
             )
-                .filter((res) => res.status === 'fulfilled')
+                .filter((res) => res.status === 'fulfilled') // Some aliases may not be in db.
                 .map(({ value }) => value.data);
 
-            setHistory(updatedHistory);
+            setHistory(initHistory);
+            localStorage.setItem(
+                'recent-history',
+                JSON.stringify(initHistory.map(({ alias }) => alias))
+            ); // Remove aliases that are not in db.
         }
     }
 
