@@ -37,7 +37,7 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
             if (response.status !== 200) {
                 alert(json.message);
             } else {
-                updateLocalHistory(BASE_URL + json.alias, formData.longUrl);
+                updateLocalHistory(BASE_URL + json.alias);
                 setShortUrl(BASE_URL + json.alias);
                 setShowResult(true);
             }
@@ -46,32 +46,26 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
         }
     }
 
-    function updateLocalHistory(shortUrl: string, fullUrl: string) {
+    function updateLocalHistory(shortUrl: string) {
         const historyString: string | null = localStorage.getItem('history');
 
         if (historyString) {
-            const history = JSON.parse(historyString);
+            const history: string[] = JSON.parse(historyString);
 
-            history.push({
-                shortUrl,
-                fullUrl,
-            });
+            if (!new Set(history).has(shortUrl)) {
+                // Avoid duplicate shortUrl.
+                history.push(shortUrl);
+            }
 
             if (history.length > 5) {
+                // Only show RECENT history.
                 history.shift();
             }
 
+            history.reverse();
             localStorage.setItem('history', JSON.stringify(history));
         } else {
-            localStorage.setItem(
-                'history',
-                JSON.stringify([
-                    {
-                        shortUrl,
-                        fullUrl,
-                    },
-                ])
-            );
+            localStorage.setItem('history', JSON.stringify([shortUrl]));
         }
     }
 
@@ -106,6 +100,7 @@ export default function Form({ openHistory }: { openHistory: () => void }) {
     }
 
     function handleShortenAnother() {
+        setFormData({ longUrl: '', alias: '' });
         setShowResult(false);
     }
 

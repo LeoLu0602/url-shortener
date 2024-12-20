@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import HistoryItem from './HistoryItem';
 
 export default function History({
     showHistory,
@@ -7,10 +8,13 @@ export default function History({
     showHistory: boolean;
     hideHistory: () => void;
 }) {
+    const historyString: string | null = localStorage.getItem('history');
+    const history: string[] = historyString ? JSON.parse(historyString) : [];
+
     return (
         <div
             className={clsx(
-                'bg-white min-h-screen w-[650px] transition-all duration-500 relative',
+                'bg-white min-h-screen w-[650px] transition-all duration-500 relative pt-[76.25px] pb-4',
                 {
                     'translate-x-full opacity-0': !showHistory,
                     'translate-x-0 opacity-100': showHistory,
@@ -26,6 +30,9 @@ export default function History({
                     &#10005;
                 </button>
             </div>
+            {history.map((shortUrl) => (
+                <HistoryItem shortUrl={shortUrl} key={shortUrl} />
+            ))}
         </div>
     );
 }
