@@ -1,4 +1,5 @@
 import { AnalyticsType } from '@/types';
+import { BASE_URL } from '@/global';
 
 export default function HistoryItem({
     analytics,
@@ -6,8 +7,6 @@ export default function HistoryItem({
     analytics: AnalyticsType;
 }) {
     const { alias, fullUrl, createdAt, count, lastTimeAccessed } = analytics;
-
-    const BASE_URL = 'http://localhost:8080/';
 
     return (
         <div className="mt-4 border-2 p-4">
@@ -31,11 +30,20 @@ export default function HistoryItem({
             </div>
             <div className="text-sm text-[#939aa0]">Clicks: {count}</div>
             <div className="text-sm text-[#939aa0]">
-                Created: {new Date(createdAt).toLocaleString()}
+                Created:{' '}
+                {new Date(createdAt).toLocaleString('en-US', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                })}
             </div>
             <div className="text-sm text-[#939aa0]">
                 Last Time Accessed:{' '}
-                {new Date(lastTimeAccessed).toLocaleString()}
+                {new Date(lastTimeAccessed) <= new Date()
+                    ? new Date(lastTimeAccessed).toLocaleString('en-US', {
+                          dateStyle: 'medium',
+                          timeStyle: 'short',
+                      })
+                    : 'N/A'}
             </div>
         </div>
     );
