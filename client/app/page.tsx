@@ -27,7 +27,7 @@ export default function Home() {
                 />
             )}
             <div className="fixed top-0 right-0 z-20">
-                <History showHistory={showHistory} />
+                <History showHistory={showHistory} hideHistory={hideHistory} />
             </div>
         </main>
     );
