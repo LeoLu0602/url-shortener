@@ -14,7 +14,7 @@ export default function History({
     return (
         <div
             className={clsx(
-                'bg-white min-h-screen w-[650px] transition-all duration-500 relative pt-[76.25px] pb-4',
+                'bg-white min-h-screen w-[650px] transition-all duration-500 relative pt-[76.25px] pb-4 px-4',
                 {
                     'translate-x-full opacity-0': !showHistory,
                     'translate-x-0 opacity-100': showHistory,
