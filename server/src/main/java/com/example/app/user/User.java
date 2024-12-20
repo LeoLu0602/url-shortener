@@ -1,38 +1,44 @@
 package com.example.app.user;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import org.hibernate.annotations.DynamicInsert;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@DynamicInsert
+@Table(name = "users")
 public class User {
-    private int id;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate ID (e.g., auto-increment)
+    private Long id;
     private String email;
     private String name;
     private String password;
-    private LocalDate created_at;
+    private LocalDateTime createdAt;
 
-    public User() {
+    protected User() {
 
     }
 
-    public User(int id, String email, String name, String password, LocalDate created_at) {
-        this.id = id;
+    public User(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
-        this.created_at = created_at;
+        this.createdAt = createdAt;
     }
 
-    public User(String email, String name, String password, LocalDate created_at) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.created_at = created_at;
-    }
-
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -60,16 +66,21 @@ public class User {
         this.password = password;
     }
 
-    public LocalDate getCreatedAt() {
-        return this.created_at;
+    public LocalDateTime getCreatedAt() {
+        return this.createdAt;
     }
 
-    public void setCreatedAt(LocalDate created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
-        return this.id + " " + this.email + " " + this.name + " " + this.password + " " + this.created_at;
+        return 
+            "id: " + this.id + ", " + 
+            "email: " + this.email + ", " + 
+            "name: " + this.name + ", " + 
+            "password: " + this.password + ", " + 
+            "created_at: " + this.createdAt;
     }
 }

@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Url {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-generate ID (e.g., auto-increment)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-generate ID (e.g., auto-increment)
     private Long id;
     private String alias;
     private String fullUrl;
