@@ -3,6 +3,7 @@
 import { ChangeEvent, useState } from 'react';
 import clsx from 'clsx';
 import { FormType } from '@/types';
+import { BASE_URL } from '@/global';
 
 export default function Form({
     openHistory,
@@ -18,8 +19,6 @@ export default function Form({
     });
     const [shortUrl, setShortUrl] = useState<string>('');
     const [copyBtnTxt, setCopyBtnTxt] = useState<'Copy' | 'Copied!'>('Copy');
-
-    const BASE_URL = 'http://localhost:8080/';
 
     async function handleSubmit(): Promise<void> {
         if (formData.longUrl === '') {

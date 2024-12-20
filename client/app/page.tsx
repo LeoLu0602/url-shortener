@@ -5,12 +5,11 @@ import axios from 'axios';
 import Form from '@/components/Form';
 import History from '@/components/History';
 import { AnalyticsType } from '@/types';
+import { BASE_URL } from '@/global';
 
 export default function Home() {
     const [showHistory, setShowHistory] = useState<boolean>(false);
     const [history, setHistory] = useState<AnalyticsType[]>([]);
-
-    const BASE_URL = 'http://localhost:8080/';
 
     useEffect(() => {
         setUp();
