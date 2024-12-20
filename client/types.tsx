@@ -9,4 +9,6 @@ export interface AnalyticsType {
     createdAt: string;
     count: number;
     lastTimeAccessed: string;
+    id: string;
+    userId: string;
 }

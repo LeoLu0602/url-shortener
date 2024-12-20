@@ -36,7 +36,10 @@ export default function Home() {
                 newHistory = newHistory.slice(0, 5);
             } catch (error) {
                 console.error(error);
-                alert(error.response.data.message);
+
+                if (axios.isAxiosError(error) && error.response) {
+                    alert(error.response.data.message);
+                }
             }
 
             setHistory(newHistory);

@@ -39,7 +39,10 @@ export default function Form({
             setShowResult(true);
         } catch (error) {
             console.error(error);
-            alert(error.response.data.message);
+
+            if (axios.isAxiosError(error) && error.response) {
+                alert(error.response.data.message);
+            }
         }
     }
 
