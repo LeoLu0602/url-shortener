@@ -33,7 +33,7 @@ public class UrlController {
     }
 
     @GetMapping("/api/v1/url/analytics")
-    public Analytics getAnalytics(@RequestParam(value = "alias", defaultValue = "") String alias) {
+    public Url getAnalytics(@RequestParam(value = "alias", defaultValue = "") String alias) {
         return urlService.getAnalytics(alias);
     }
 

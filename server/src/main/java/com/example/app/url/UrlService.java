@@ -97,15 +97,13 @@ public class UrlService {
         urlRepository.setLastTimeAccessed(alias, time);
     }
 
-    public Analytics getAnalytics(String alias) {
+    public Url getAnalytics(String alias) {
         List<Url> rows = urlRepository.findByAlias(alias);
 
         if (rows.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Alias does not exist.");
         } 
 
-        Analytics analytics = new Analytics(rows.get(0).getCount(), rows.get(0).getLastTimeAccessed());
-
-        return analytics;
+        return rows.get(0);
     }
 }
