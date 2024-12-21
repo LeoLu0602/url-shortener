@@ -58,7 +58,7 @@ public class UrlService {
             }
         }
         
-        return alias;
+        return generatedAlias;
     }
 
     public String generateAlias(String fullUrl) {
