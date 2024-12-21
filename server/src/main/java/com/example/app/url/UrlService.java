@@ -18,7 +18,7 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
 
-    public String addUrl(Url req) {
+    public String addUrl(AddUrlRequest req) {
         String customAlias = req.getAlias().strip();
         String fullUrl = req.getFullUrl().strip();
 

@@ -23,7 +23,7 @@ public class UrlController {
     }
 
     @PostMapping("/api/v1/url/add")
-    public HashMap<String, String> addUrl(@RequestBody Url req) {
+    public HashMap<String, String> addUrl(@RequestBody AddUrlRequest req) {
         HashMap<String, String> res = new HashMap<>();
         String alias = urlService.addUrl(req);
 
