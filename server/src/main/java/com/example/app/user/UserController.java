@@ -19,5 +19,10 @@ public class UserController {
     @PostMapping("/api/v1/user/sign-up")
     public void signUp(@RequestBody SignUpRequest req) {
         userService.signUp(req);
-    }    
+    }
+    
+    @PostMapping("/api/v1/user/login")
+    public User logIn(@RequestBody LoginRequest req) {
+        return userService.logIn(req);
+    }
 }
