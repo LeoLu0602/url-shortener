@@ -34,6 +34,12 @@ public class Url {
         this.fullUrl = fullUrl;
     }
 
+    public Url(String alias, String fullUrl, Long userId) {
+        this.alias = alias;
+        this.fullUrl = fullUrl;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return this.id;
     }
