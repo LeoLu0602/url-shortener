@@ -23,8 +23,6 @@ public class UrlService {
         String fullUrl = req.getFullUrl().strip();
         Long userId = req.getUserId();
 
-        System.out.println("\n\n\n" + userId + "\n\n\n");
-
         if (!customAlias.isEmpty()) {
             if (!urlRepository.findByAlias(customAlias).isEmpty()) {
                 // If a custom alias is already in use, reject the alias and return a bad request (400).
@@ -54,9 +52,9 @@ public class UrlService {
             // Only save alias if it is not already in use.
             // SHA-256 is deterministic, meaning that given the same input data, the output will always be identical.
             if (userId == -1L) {
-                urlRepository.save(new Url(customAlias, fullUrl));
+                urlRepository.save(new Url(alias, fullUrl));
             } else {
-                urlRepository.save(new Url(customAlias, fullUrl, userId));
+                urlRepository.save(new Url(alias, fullUrl, userId));
             }
         }
         
