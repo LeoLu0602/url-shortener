@@ -8,7 +8,12 @@ public class AddUrlRequest {
     public AddUrlRequest(String alias, String fullUrl, Long userId) {
         this.alias = alias;
         this.fullUrl = fullUrl;
-        this.userId = userId;
+        
+        if (userId == null) {
+            this.userId = -1L;
+        } else {
+            this.userId = userId;
+        }
     }
 
     public String getAlias() {
