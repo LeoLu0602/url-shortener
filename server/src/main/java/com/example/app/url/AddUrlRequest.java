@@ -32,6 +32,10 @@ public class AddUrlRequest {
     }
 
     public void setUserId(Long userId) {
-        this.userId = userId;
+        if (userId == null) {
+            this.userId = -1L;
+        } else {
+            this.userId = userId;
+        }
     }
 }
