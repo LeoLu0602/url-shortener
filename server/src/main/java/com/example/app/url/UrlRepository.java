@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UrlRepository extends CrudRepository<Url, Long> {
     List<Url> findByAlias(String alias);
 
+    @Query(value = "SELECT url FROM Url url WHERE url.alias = :alias AND url.userId = :userId")
+    List<Url> findByAliasAndUserId(@Param("alias") String alias, @Param("userId") Long userId);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE urls SET count = count + 1 WHERE alias = :alias", nativeQuery = true)

@@ -47,15 +47,13 @@ public class UrlService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server encountered an internal error.");
         }
 
-        if (urlRepository.findByAlias(generatedAlias).isEmpty()) {
-            // alias is unique.
-            // Only save alias if it is not already in use.
-            // SHA-256 is deterministic, meaning that given the same input data, the output will always be identical.
-            if (userId == -1L) {
-                urlRepository.save(new Url(generatedAlias, fullUrl));
-            } else {
-                urlRepository.save(new Url(generatedAlias, fullUrl, userId));
-            }
+        // The combination of alias and userId is unique.
+        if (userId == -1L && urlRepository.findByAlias(generatedAlias).isEmpty()) {
+            urlRepository.save(new Url(generatedAlias, fullUrl));
+        }
+        
+        if (userId != -1L && urlRepository.findByAliasAndUserId(generatedAlias, userId).isEmpty()) {
+            urlRepository.save(new Url(generatedAlias, fullUrl, userId));
         }
         
         return generatedAlias;
