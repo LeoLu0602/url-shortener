@@ -18,7 +18,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void signUp(User req) {
+    public void signUp(SignUpRequest req) {
         String email = req.getEmail();
         String name = req.getName();
         String password = req.getPassword();
@@ -42,7 +42,7 @@ public class UserService {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashedBytes = md.digest((password + salt).getBytes());
     
-            return Base64.getEncoder().encodeToString(hashedBytes);
+            return salt + ":" + Base64.getEncoder().encodeToString(hashedBytes);
         } catch (NoSuchAlgorithmException e) {
             return "";
         }

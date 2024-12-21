@@ -17,7 +17,7 @@ public class UserController {
     }
     
     @PostMapping("/api/v1/user/sign-up")
-    public void signUp(@RequestBody User req) {
+    public void signUp(@RequestBody SignUpRequest req) {
         userService.signUp(req);
     }    
 }
