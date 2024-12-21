@@ -40,21 +40,21 @@ public class UrlService {
         } 
 
         // If no custom alias is given, generate one.
-        String alias = this.generateAlias(fullUrl);
+        String generatedAlias = this.generateAlias(fullUrl);
 
-        if (alias.isEmpty()) {
+        if (generatedAlias.isEmpty()) {
             // toSHA256 doesn't work as expected.
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server encountered an internal error.");
         }
 
-        if (urlRepository.findByAlias(alias).isEmpty()) {
+        if (urlRepository.findByAlias(generatedAlias).isEmpty()) {
             // alias is unique.
             // Only save alias if it is not already in use.
             // SHA-256 is deterministic, meaning that given the same input data, the output will always be identical.
             if (userId == -1L) {
-                urlRepository.save(new Url(alias, fullUrl));
+                urlRepository.save(new Url(generatedAlias, fullUrl));
             } else {
-                urlRepository.save(new Url(alias, fullUrl, userId));
+                urlRepository.save(new Url(generatedAlias, fullUrl, userId));
             }
         }
         
