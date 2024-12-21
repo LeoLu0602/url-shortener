@@ -3,10 +3,12 @@ package com.example.app.url;
 public class AddUrlRequest {
     private String alias;
     private String fullUrl;
+    private Long userId;
 
-    public AddUrlRequest(String alias, String fullUrl) {
+    public AddUrlRequest(String alias, String fullUrl, Long userId) {
         this.alias = alias;
         this.fullUrl = fullUrl;
+        this.userId = userId;
     }
 
     public String getAlias() {
@@ -23,5 +25,13 @@ public class AddUrlRequest {
 
     public void setFullUrl(String fullUrl) {
         this.fullUrl = fullUrl;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }
