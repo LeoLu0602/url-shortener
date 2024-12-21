@@ -22,7 +22,7 @@ public class UserController {
     }
     
     @PostMapping("/api/v1/user/login")
-    public User logIn(@RequestBody LoginRequest req) {
+    public LoginResponse logIn(@RequestBody LoginRequest req) {
         return userService.logIn(req);
     }
 }

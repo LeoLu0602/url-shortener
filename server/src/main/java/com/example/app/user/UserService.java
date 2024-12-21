@@ -38,7 +38,7 @@ public class UserService {
         }
     }
 
-    public User logIn(LoginRequest req) {
+    public LoginResponse logIn(LoginRequest req) {
         String email = req.getEmail();
         String password = req.getPassword();
         List<User> users = userRepository.findByEmail(email);
@@ -51,7 +51,7 @@ public class UserService {
             String hashedPassword = this.hashPassword(password, salt);
 
             if (hashedPassword.equals(user.getPassword())) {
-                return user;
+                return new LoginResponse(user.getId(), user.getEmail(), user.getName(), user.getCreatedAt());
             }
 
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password.");
