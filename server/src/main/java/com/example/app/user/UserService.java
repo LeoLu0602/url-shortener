@@ -54,7 +54,7 @@ public class UserService {
                 return user;
             }
 
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong password.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password.");
         }
     }
 
