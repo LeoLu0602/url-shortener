@@ -5,10 +5,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
 
 @Service    
 public class UserService {
@@ -23,6 +26,10 @@ public class UserService {
         String email = req.getEmail();
         String name = req.getName();
         String password = req.getPassword();
+
+        if (!checkEmailFormat(email)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email format is not valid.");
+        }
 
         if (userRepository.findByEmail(email).isEmpty()) {
             String salt = this.generateSalt(password);
@@ -56,6 +63,14 @@ public class UserService {
 
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Wrong password.");
         }
+    }
+
+    public Boolean checkEmailFormat(String email) {
+        String email_regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        Pattern pattern = Pattern.compile(email_regex);
+        Matcher matcher = pattern.matcher(email);
+    
+        return matcher.matches();
     }
 
     public String hashPassword(String password, String salt) {
