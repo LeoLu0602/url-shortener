@@ -79,7 +79,7 @@ export default function Home() {
     }
 
     return (
-        <main className="min-h-screen w-full bg-[#1e8aa4]">
+        <>
             <div className="absolute left-12 top-[92px]">
                 <Form openHistory={openHistory} updateHistory={updateHistory} />
             </div>
@@ -96,6 +96,6 @@ export default function Home() {
                     history={history}
                 />
             </div>
-        </main>
+        </>
     );
 }
