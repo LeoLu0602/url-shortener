@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
-import { FormType } from '@/types';
+import { UrlFormType } from '@/types';
 import { BASE_URL } from '@/global';
 
 export default function Form({
@@ -14,7 +14,7 @@ export default function Form({
     updateHistory: (alias: string) => void;
 }) {
     const [showResult, setShowResult] = useState<boolean>(false);
-    const [formData, setFormData] = useState<FormType>({
+    const [formData, setFormData] = useState<UrlFormType>({
         longUrl: '',
         alias: '',
     });

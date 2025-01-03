@@ -1,4 +1,4 @@
-export interface FormType {
+export interface UrlFormType {
     longUrl: string;
     alias: string;
 }
