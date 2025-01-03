@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Form from '@/components/UrlForm';
+import clsx from 'clsx';
+import UrlForm from '@/components/UrlForm';
 import History from '@/components/History';
 import { AnalyticsType } from '@/types';
 import { BASE_URL } from '@/global';
@@ -81,7 +82,10 @@ export default function Home() {
     return (
         <>
             <div className="absolute left-12 top-[92px]">
-                <Form openHistory={openHistory} updateHistory={updateHistory} />
+                <UrlForm
+                    openHistory={openHistory}
+                    updateHistory={updateHistory}
+                />
             </div>
             {showHistory && (
                 <div
@@ -89,7 +93,9 @@ export default function Home() {
                     onClick={hideHistory}
                 />
             )}
-            <div className="fixed top-0 right-0 z-20">
+            <div
+                className={clsx('fixed top-0 right-0', { 'z-20': showHistory })}
+            >
                 <History
                     showHistory={showHistory}
                     hideHistory={hideHistory}

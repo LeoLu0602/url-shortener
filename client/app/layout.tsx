@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import './globals.css';
 
 const defaultUrl = process.env.VERCEL_URL
@@ -18,6 +19,7 @@ export default function RootLayout({
     return (
         <html lang="en" className="" suppressHydrationWarning>
             <body className="font-sans">
+                <Navbar />
                 <main className="min-h-screen min-w-full bg-[#1e8aa4]">
                     {children}
                 </main>

@@ -49,7 +49,7 @@ export default function Register() {
 
     return (
         <div className="min-h-screen min-w-full flex flex-col justify-center items-center gap-8">
-            <h1 className="text-3xl text-white font-bold">Register</h1>
+            <h1 className="text-3xl text-white font-bold">Sign-Up</h1>
             <form
                 className="bg-white p-8 rounded-lg w-[448.5px] text-xl"
                 onSubmit={handleSubmit}
