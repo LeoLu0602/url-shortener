@@ -19,7 +19,7 @@ export default function HistoryItem({
                     {BASE_URL + alias}
                 </a>
             </div>
-            <div>
+            <div className="whitespace-nowrap overflow-hidden text-ellipsis">
                 <a
                     className="font-bold text-sm text-[#95aa54]"
                     href={fullUrl}
