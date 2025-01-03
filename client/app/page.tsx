@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Form from '@/components/Form';
+import Form from '@/components/UrlForm';
 import History from '@/components/History';
 import { AnalyticsType } from '@/types';
 import { BASE_URL } from '@/global';
