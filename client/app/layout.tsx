@@ -22,12 +22,6 @@ export default function RootLayout({
         <html lang="en" className="" suppressHydrationWarning>
             <body className="font-sans">
                 <AuthProvider>
-                    <Link
-                        className="fixed left-12 top-4 text-white font-bold text-3xl"
-                        href="/"
-                    >
-                        URL Shortener
-                    </Link>
                     <Navbar />
                     <main className="min-h-screen min-w-full bg-[#1e8aa4]">
                         {children}

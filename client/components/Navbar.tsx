@@ -1,20 +1,26 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useAuth, useAuthDispatch } from '@/app/contexts/AuthContexts';
 
 export default function Navbar() {
     const auth = useAuth();
     const authDispatch = useAuthDispatch();
+    const router = useRouter();
 
     function signOut() {
         authDispatch({
             type: 'sign-out',
         });
+        router.push('/');
     }
 
     return (
-        <nav className="fixed top-4 right-12 z-10">
+        <nav className="fixed z-10 w-full h-[92px] flex items-center justify-between px-12 bg-[#1e8aa4]">
+            <Link className="text-white font-bold text-3xl" href="/">
+                URL Shortener
+            </Link>
             <ul className="flex bg-[#1f8244] h-[44px] text-white rounded-lg">
                 {auth ? (
                     <>
