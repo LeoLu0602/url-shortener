@@ -6,7 +6,7 @@ import axios from 'axios';
 import { BASE_URL } from '@/global';
 import { useAuthDispatch } from '../contexts/AuthContexts';
 
-export default function Login() {
+export default function SignIn() {
     const router = useRouter();
     const authDispatch = useAuthDispatch();
 

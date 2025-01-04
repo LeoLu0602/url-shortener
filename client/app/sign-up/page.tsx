@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { BASE_URL } from '@/global';
 
-export default function Register() {
+export default function SignUp() {
     const [formData, setFormData] = useState<{
         email: string;
         name: string;

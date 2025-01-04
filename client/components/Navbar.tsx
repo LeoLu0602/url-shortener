@@ -40,7 +40,7 @@ export default function Navbar() {
                         <li>
                             <Link
                                 className="h-full flex items-center px-4 hover:bg-[#2bb35d] rounded-lg"
-                                href="/register"
+                                href="/sign-up"
                             >
                                 Sign Up
                             </Link>
