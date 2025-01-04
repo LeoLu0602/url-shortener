@@ -9,7 +9,7 @@ export default function HistoryItem({
     const { alias, fullUrl, createdAt, count, lastTimeAccessed } = analytics;
 
     return (
-        <div className="mt-4 border-2 p-4">
+        <div className="mt-4 border-2 p-4 bg-white">
             <div>
                 <a
                     className="font-bold text-xl"

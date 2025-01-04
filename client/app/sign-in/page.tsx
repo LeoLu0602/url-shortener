@@ -22,7 +22,7 @@ export default function SignIn() {
         e.preventDefault();
 
         try {
-            await axios.post(BASE_URL + 'api/v1/user/login', {
+            const res = await axios.post(BASE_URL + 'api/v1/user/login', {
                 email: formData.email,
                 password: formData.password,
             });
@@ -30,9 +30,7 @@ export default function SignIn() {
             router.push('/');
             authDispatch({
                 type: 'sign-in',
-                newAuth: {
-                    email: formData.email,
-                },
+                newAuth: res.data,
             });
         } catch (error) {
             console.error(error);
