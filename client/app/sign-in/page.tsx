@@ -70,6 +70,7 @@ export default function SignIn() {
                             value={formData.email}
                             onChange={handleChange}
                             required={true}
+                            autocomplete="off"
                         />
                     </label>
                 </div>
