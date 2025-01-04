@@ -28,7 +28,7 @@ export default function Register() {
                 password: formData.password,
             });
 
-            router.push('/login');
+            router.push('/sign-in');
         } catch (error) {
             console.error(error);
 
