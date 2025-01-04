@@ -3,8 +3,9 @@
 import { ChangeEvent, useState } from 'react';
 import clsx from 'clsx';
 import axios from 'axios';
-import { UrlFormType } from '@/types';
+import { UrlFormType, UserType } from '@/types';
 import { BASE_URL } from '@/global';
+import { useAuth } from '@/app/contexts/AuthContexts';
 
 export default function Form({
     openHistory,
@@ -20,6 +21,7 @@ export default function Form({
     });
     const [shortUrl, setShortUrl] = useState<string>('');
     const [copyBtnTxt, setCopyBtnTxt] = useState<'Copy' | 'Copied!'>('Copy');
+    const auth: UserType | null = useAuth();
 
     async function handleSubmit(): Promise<void> {
         if (formData.longUrl === '') {
@@ -32,6 +34,7 @@ export default function Form({
             const res = await axios.post(BASE_URL + 'api/v1/url/add', {
                 alias: formData.alias,
                 fullUrl: formData.longUrl,
+                userId: auth?.id ?? null,
             });
 
             updateHistory(res.data.alias);
