@@ -9,8 +9,8 @@ export interface AnalyticsType {
     createdAt: string;
     count: number;
     lastTimeAccessed: string;
-    id: string;
-    userId: string;
+    id: number;
+    userId: number;
 }
 
 export interface UserType {
@@ -23,4 +23,14 @@ export interface UserType {
 export interface ActionType {
     type: 'sign-in' | 'sign-out';
     newAuth: UserType | null;
+}
+
+export interface UrlType {
+    id: number;
+    alias: string;
+    fullUrl: string;
+    userId: number;
+    createdAt: string;
+    count: number;
+    lastTimeAccessed: string;
 }
