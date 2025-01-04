@@ -33,6 +33,7 @@ public class UrlService {
             if (userId == -1L) {
                 urlRepository.save(new Url(customAlias, fullUrl));
             } else {
+                // Grant ownership to the creator.
                 urlRepository.save(new Url(customAlias, fullUrl, userId));
             }
 
@@ -47,13 +48,10 @@ public class UrlService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The server encountered an internal error.");
         }
 
-        // The combination of alias and userId is unique.
-        if (userId == -1L && urlRepository.findByAlias(generatedAlias).isEmpty()) {
+        // Only save it if generatedAlias is not present in the database.
+        if (urlRepository.findByAlias(generatedAlias).isEmpty()) {
+            // Generated short urls have no ownership.
             urlRepository.save(new Url(generatedAlias, fullUrl));
-        }
-        
-        if (userId != -1L && urlRepository.findByAliasAndUserId(generatedAlias, userId).isEmpty()) {
-            urlRepository.save(new Url(generatedAlias, fullUrl, userId));
         }
         
         return generatedAlias;
