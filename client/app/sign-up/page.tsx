@@ -65,6 +65,7 @@ export default function SignUp() {
                             value={formData.name}
                             onChange={handleChange}
                             required={true}
+                            autoComplete="off"
                         />
                     </label>
                 </div>
@@ -79,6 +80,7 @@ export default function SignUp() {
                             value={formData.email}
                             onChange={handleChange}
                             required={true}
+                            autoComplete="off"
                         />
                     </label>
                 </div>
@@ -93,6 +95,7 @@ export default function SignUp() {
                             value={formData.password}
                             onChange={handleChange}
                             required={true}
+                            autoComplete="off"
                         />
                     </label>
                 </div>

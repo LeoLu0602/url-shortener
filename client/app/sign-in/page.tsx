@@ -28,10 +28,13 @@ export default function SignIn() {
             });
 
             router.push('/');
-            authDispatch({
-                type: 'sign-in',
-                newAuth: res.data,
-            });
+
+            if (authDispatch) {
+                authDispatch({
+                    type: 'sign-in',
+                    newAuth: res.data,
+                });
+            }
         } catch (error) {
             console.error(error);
 
@@ -83,6 +86,7 @@ export default function SignIn() {
                             value={formData.password}
                             onChange={handleChange}
                             required={true}
+                            autoComplete="off"
                         />
                     </label>
                 </div>

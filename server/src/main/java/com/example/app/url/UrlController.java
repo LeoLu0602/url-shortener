@@ -2,6 +2,7 @@ package com.example.app.url;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,4 +45,10 @@ public class UrlController {
 
         return new RedirectView(urlService.getFullUrl(alias));
     }
+
+    @PostMapping("/api/v1/url/ownership")
+    public List<Url> getUserUrls(@RequestBody GetUserUrlsRequest req) {
+        return urlService.getUserUrls(req.getUserId());
+    }
+    
 }

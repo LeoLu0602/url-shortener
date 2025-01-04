@@ -111,4 +111,8 @@ public class UrlService {
 
         return rows.get(0);
     }
+
+    public List<Url> getUserUrls(Long userId) {
+        return urlRepository.findByUserId(userId);
+    }
 }
