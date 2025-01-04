@@ -4,8 +4,12 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { BASE_URL } from '@/global';
+import { useAuthDispatch } from '../contexts/AuthContexts';
 
 export default function Login() {
+    const router = useRouter();
+    const authDispatch = useAuthDispatch();
+
     const [formData, setFormData] = useState<{
         email: string;
         password: string;
@@ -13,8 +17,6 @@ export default function Login() {
         email: '',
         password: '',
     });
-
-    const router = useRouter();
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -26,6 +28,12 @@ export default function Login() {
             });
 
             router.push('/');
+            authDispatch({
+                type: 'sign-in',
+                newAuth: {
+                    email: formData.email,
+                },
+            });
         } catch (error) {
             console.error(error);
 
