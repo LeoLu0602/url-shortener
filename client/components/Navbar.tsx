@@ -1,20 +1,24 @@
 'use client';
 
+import { Dispatch, JSX } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { ActionType, UserType } from '@/types';
 import { useAuth, useAuthDispatch } from '@/app/contexts/AuthContexts';
 
-export default function Navbar() {
-    const auth = useAuth();
-    const authDispatch = useAuthDispatch();
+export default function Navbar(): JSX.Element {
+    const auth: UserType | null = useAuth();
+    const authDispatch: Dispatch<ActionType> | null = useAuthDispatch();
     const router = useRouter();
 
-    function signOut() {
-        authDispatch({
-            type: 'sign-out',
-            newAuth: null,
-        });
-        router.push('/');
+    function signOut(): void {
+        if (authDispatch) {
+            authDispatch({
+                type: 'sign-out',
+                newAuth: null,
+            });
+            router.push('/');
+        }
     }
 
     return (
