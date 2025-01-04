@@ -12,6 +12,7 @@ export default function Navbar() {
     function signOut() {
         authDispatch({
             type: 'sign-out',
+            newAuth: null,
         });
         router.push('/');
     }

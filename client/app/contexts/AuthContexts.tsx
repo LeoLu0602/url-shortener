@@ -1,11 +1,26 @@
 'use client';
 
-import { createContext, useContext, useReducer } from 'react';
+import {
+    Context,
+    createContext,
+    Dispatch,
+    JSX,
+    useContext,
+    useReducer,
+} from 'react';
+import { ActionType, UserType } from '@/types';
 
-const AuthContext = createContext(null);
-const AuthDispatchContext = createContext(null);
+const AuthContext: Context<UserType | null> = createContext<UserType | null>(
+    null
+);
+const AuthDispatchContext: Context<Dispatch<ActionType> | null> =
+    createContext<Dispatch<ActionType> | null>(null);
 
-export function AuthProvider({ children }) {
+export function AuthProvider({
+    children,
+}: {
+    children: React.ReactNode;
+}): JSX.Element {
     const [auth, dispatch] = useReducer(authReducer, null);
 
     return (
@@ -17,24 +32,18 @@ export function AuthProvider({ children }) {
     );
 }
 
-export function useAuth() {
+export function useAuth(): UserType | null {
     return useContext(AuthContext);
 }
 
-export function useAuthDispatch() {
+export function useAuthDispatch(): Dispatch<ActionType> | null {
     return useContext(AuthDispatchContext);
 }
 
-function authReducer(auth, action) {
-    switch (action.type) {
-        case 'sign-in': {
-            return action.newAuth;
-        }
-        case 'sign-out': {
-            return null;
-        }
-        default: {
-            throw Error('Unknown action: ' + action.type);
-        }
+function authReducer(auth: UserType | null, action: ActionType) {
+    if (action.type === 'sign-in' || action.type === 'sign-out') {
+        return action.newAuth;
     }
+
+    throw Error('Unknown action: ' + action.type);
 }

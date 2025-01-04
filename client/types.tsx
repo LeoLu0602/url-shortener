@@ -19,3 +19,8 @@ export interface UserType {
     name: string;
     created_at: string;
 }
+
+export interface ActionType {
+    type: 'sign-in' | 'sign-out';
+    newAuth: UserType | null;
+}
